@@ -1,2 +1,1 @@
-# wecasa
-Test technique wecasa
+# Wecasa Technical test
