@@ -7,7 +7,7 @@ class ProsController < ApplicationController
   end
 
   def find
-    @pros   = Pro.find_pros(params['references'])
+    @pros   = Pro.find_pros(params['references'], params['address'])
     @result = []
 
     @pros.each do |pro|

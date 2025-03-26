@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :pro do
     sequence(:name) { |n| "Name#{n}" }
     sequence(:address) { |n| "Address#{n}" }
+    lat { 48.874853 }
+    lng { 48.874853 }
     max_kilometers { 5 }
 
     opening_hours  do

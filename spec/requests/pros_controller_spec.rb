@@ -11,9 +11,10 @@ RSpec.describe 'ProsController', type: :request do
   end
 
   describe 'POST pros/find' do
-    subject(:action) { post '/pros/find', params: { references: references } }
+    subject(:action) { post '/pros/find', params: { references: references, address: address } }
 
     let(:references) { %w[woman_haircut woman_shampoo] }
+    let(:address)    { '127 Avenue Pablo Picasso, 92000 Nanterre' }
 
     context 'when receiving only references' do
       it 'works' do

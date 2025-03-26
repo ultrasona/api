@@ -4,11 +4,17 @@
 <%= form_with url: "/pros/find", method: :post do |f| %>
 
   <p>Which prestation are you looking for?</p>
-   <% @prestations.each do |prestation| %>
+  <% @prestations.each do |prestation| %>
     <%= f.check_box :references, { multiple: true }, prestation.reference, nil %>
     <%= prestation.reference %>
   <% end %>
 
+  <br \>
+  <br \>
+  <%= f.label :address, "Address:" %>
+  <%= f.search_field :address %>
+
+ <br \>
  <br \>
   <%= f.submit "Send" %>
 

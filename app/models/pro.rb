@@ -27,8 +27,9 @@ class Pro < ApplicationRecord
 
   scope :with_prestation, ->(reference) { joins(:prestations).where('reference = ?', reference) }
 
-  def self.find_pros(references)
-    with_prestations_matching(references)
+  def self.find_pros(references, address)
+    presta_pro = with_prestations_matching(references)
+    within_range_of(presta_pro, address)
   end
 
   def self.with_prestations_matching(references)
@@ -43,5 +44,23 @@ class Pro < ApplicationRecord
     end
 
     available_pros
+  end
+
+  def self.within_range_of(pros, address)
+    address_services = address_coordinates(address)
+
+    available_pros = []
+    pros.each do |pro|
+      address_pro = address_coordinates(pro.address)
+
+      distance = Geocoder::Calculations.distance_between(address_services, address_pro, units: :km)
+      available_pros.push(pro) if distance <= pro.max_kilometers
+    end
+
+    available_pros
+  end
+
+  def self.address_coordinates(address)
+    Geocoder.search(address).first.coordinates
   end
 end
