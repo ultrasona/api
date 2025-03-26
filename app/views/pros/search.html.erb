@@ -1,0 +1,15 @@
+<h1>Search for a pro!</h1>
+
+
+<%= form_with url: "/pros/find", method: :post do |f| %>
+
+  <p>Which prestation are you looking for?</p>
+   <% @prestations.each do |prestation| %>
+    <%= f.check_box :references, { multiple: true }, prestation.reference, nil %>
+    <%= prestation.reference %>
+  <% end %>
+
+ <br \>
+  <%= f.submit "Send" %>
+
+<% end %>
