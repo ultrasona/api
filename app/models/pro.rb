@@ -24,4 +24,24 @@ class Pro < ApplicationRecord
 
   has_and_belongs_to_many :prestations, class_name: 'Prestation', join_table: 'prestation_by_pro',
                                         association_foreign_key: 'prestation_id'
+
+  scope :with_prestation, ->(reference) { joins(:prestations).where('reference = ?', reference) }
+
+  def self.find_pros(references)
+    with_prestations_matching(references)
+  end
+
+  def self.with_prestations_matching(references)
+    pros = Pro.with_prestation(references[0])
+    available_pros = []
+
+    pros.each do |pro|
+      has_prestation = true
+      has_prestation = false unless (pro.prestations.map(&:reference) & references) == references
+
+      available_pros.push(pro) if has_prestation
+    end
+
+    available_pros
+  end
 end

@@ -14,3 +14,5 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 Metrics/BlockLength:
   Enabled: false
+Style/BitwisePredicate:
+  Enabled: false
