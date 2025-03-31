@@ -19,7 +19,7 @@ RSpec.describe FindAvailablePros do
   describe '#call' do
     let(:references) { ['woman_shampoo'] }
     let(:address)    { '127 Avenue Pablo Picasso, 92000 Nanterre' }
-    let(:date)       { '07-07-2025' }
+    let(:date)       { '2025-07-07' }
     let(:time)       { '11:00' }
 
     it 'returns the pros that can do the booking' do

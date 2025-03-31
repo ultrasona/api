@@ -15,7 +15,7 @@ RSpec.describe 'ProsController', type: :request do
 
     let(:references) { %w[woman_haircut woman_shampoo] }
     let(:address)    { '127 Avenue Pablo Picasso, 92000 Nanterre' }
-    let(:date)       { '07-07-2025' }
+    let(:date)       { '2025-04-01' }
     let(:time)       { '11:00' }
 
     context 'when receiving only references' do
