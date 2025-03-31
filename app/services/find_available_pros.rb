@@ -1,12 +1,14 @@
 class FindAvailablePros
-  def initialize(references, address)
+  def initialize(references, address, rdv_date, rdv_time)
     @references = references
     @address = address
+    @rdv_date = rdv_date
+    @rdv_time = rdv_time
   end
 
   def call
-    pros = @references.present? ? pros_with_prestations_matching : nil
-    pros_within_range_of(pros)
+    pros_with_reference = @references.present? ? pros_with_prestations_matching : nil
+    pros_within_range_of(pros_with_reference) & pros_open_at(pros_with_reference)
   end
 
   private
@@ -38,5 +40,27 @@ class FindAvailablePros
 
   def address_coordinates(address)
     Geocoder.search(address).first.coordinates
+  end
+
+  def pros_open_at(pros)
+    rdv_day = Date.parse(@rdv_date).strftime('%A').downcase
+    available_pros = []
+
+    pros.each do |pro|
+      pro.opening_hours.each do |opening_hours_by_day|
+        opening_hours_by_day = JSON.parse opening_hours_by_day.gsub('=>', ':')
+
+        next unless rdv_day == opening_hours_by_day['day']
+
+        between_opening_time?(opening_hours_by_day) ? available_pros.push(pro) : nil
+      end
+    end
+
+    available_pros
+  end
+
+  def between_opening_time?(opening_hours_by_day)
+    (opening_hours_by_day['starts_at'] >= @rdv_time) &&
+      (@rdv_time <= opening_hours_by_day['ends_at'])
   end
 end

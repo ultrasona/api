@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FindAvailablePros do
-  subject { described_class.new(references, address) }
+  subject { described_class.new(references, address, date, time) }
 
   let(:woman_shampoo) { FactoryBot.create(:prestation, :woman_shampoo) }
   let(:woman_color)   { FactoryBot.create(:prestation, :woman_color) }
@@ -19,6 +19,8 @@ RSpec.describe FindAvailablePros do
   describe '#call' do
     let(:references) { ['woman_shampoo'] }
     let(:address)    { '127 Avenue Pablo Picasso, 92000 Nanterre' }
+    let(:date)       { '07-07-2025' }
+    let(:time)       { '11:00' }
 
     it 'returns the pros that can do the booking' do
       expect(subject.call).to_not include(first_pro)

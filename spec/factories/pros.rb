@@ -7,8 +7,11 @@ FactoryBot.define do
     max_kilometers { 5 }
 
     opening_hours  do
-      [{ day: 'monday', starts_at: '8:00', ends_at: '17:00' }, { day: 'thursday', starts_at: '8:00', ends_at: '12:00' },
-       { day: 'friday', starts_at: '8:00', ends_at: '17:00' }]
+      [
+        '{"day"=>"monday", "starts_at"=>"8:00", "ends_at"=>"17:00"}',
+        '{"day"=>"thursday", "starts_at"=>"8:00", "ends_at"=>"12:00"}',
+        '{"day"=>"friday", "starts_at"=>"8:00", "ends_at"=>"17:00"}'
+      ]
     end
 
     appointments do
