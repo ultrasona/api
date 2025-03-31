@@ -7,7 +7,7 @@ class ProsController < ApplicationController
   end
 
   def find
-    @pros   = Pro.find_pros(params['references'], params['address'])
+    @pros   = ::FindAvailablePros.new(params['references'], params['address']).call
     @result = []
 
     @pros.each do |pro|

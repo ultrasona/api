@@ -26,41 +26,4 @@ class Pro < ApplicationRecord
                                         association_foreign_key: 'prestation_id'
 
   scope :with_prestation, ->(reference) { joins(:prestations).where('reference = ?', reference) }
-
-  def self.find_pros(references, address)
-    presta_pro = with_prestations_matching(references)
-    within_range_of(presta_pro, address)
-  end
-
-  def self.with_prestations_matching(references)
-    pros = Pro.with_prestation(references[0])
-    available_pros = []
-
-    pros.each do |pro|
-      has_prestation = true
-      has_prestation = false unless (pro.prestations.map(&:reference) & references) == references
-
-      available_pros.push(pro) if has_prestation
-    end
-
-    available_pros
-  end
-
-  def self.within_range_of(pros, address)
-    address_services = address_coordinates(address)
-
-    available_pros = []
-    pros.each do |pro|
-      address_pro = address_coordinates(pro.address)
-
-      distance = Geocoder::Calculations.distance_between(address_services, address_pro, units: :km)
-      available_pros.push(pro) if distance <= pro.max_kilometers
-    end
-
-    available_pros
-  end
-
-  def self.address_coordinates(address)
-    Geocoder.search(address).first.coordinates
-  end
 end
